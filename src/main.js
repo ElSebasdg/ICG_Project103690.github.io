@@ -108,6 +108,7 @@ const cube = new Box({
     width: 1,
     height: 1,
     depth: 1,
+    color: '#FFFFFF',
     velocity: {
         x: 0,
         y: 0,
@@ -127,7 +128,7 @@ const ground = new Box({
     width: 5,
     height: 0.5,
     depth: 10,
-    color: '#0000ff',
+    color: '#964B00',
     position: {
         x: 0,
         y: -2,
@@ -251,7 +252,7 @@ const enemy = new Box({
     height: 1,
     depth: 1,
     position: {
-      x: 0,
+      x: 1.6,
       y: 0,
       z: -4
     },
@@ -306,7 +307,7 @@ function animate() {
                 y: 0,
                 z: 0.015
             },
-            color: 'orange',
+            color: 'red',
             //zAcceleration: true
           })
           enemy.castShadow = true
