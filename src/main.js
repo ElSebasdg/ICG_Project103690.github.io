@@ -15,19 +15,21 @@ const gltfLoader = new GLTFLoader().setPath('/assets/');
 const mountainLoaded = new GLTFLoader().setPath('assets/');
 mountainLoaded.load('mountain.glb', (gltf) => {
     const montanha = gltf.scene;
-    montanha.scale.set(0.1, 0.1, 0.1);
-    montanha.position.set(0, 60, 0);
+    montanha.scale.set(2, 2, 2);
+    montanha.position.set(0, 20, 0);
+    montanha.rotateX(-Math.PI/2);
     scene.add(montanha);
 });
 
 
 
-// Load skydome model
+//Load skydome model
 const domeLoaded = new GLTFLoader().setPath('assets/');
 domeLoaded.load('skydome.glb', (gltf) => {
     const ceu = gltf.scene;
-    ceu.position.set(0, -40, 0);
-	ceu.scale.set(0.5, 0.5, 0.5)
+    ceu.position.set(0, 0, 0);
+	ceu.scale.set(4, 4, 4)
+    ceu.rotateX(-Math.PI/2);
     scene.add(ceu);
 });
 
@@ -301,7 +303,7 @@ window.addEventListener('keyup', (event) => {
 
 const getRandomXPosition = () => {
     // Array of possible x-coordinates
-    const possibleXPositions = [1.6,0, -1.6];
+    const possibleXPositions = [1.6, -1.6];
     // Randomly select an index from the possibleXPositions array
     const randomIndex = Math.floor(Math.random() * possibleXPositions.length);
     // Return the corresponding x-coordinate
@@ -399,3 +401,5 @@ function animate() {
 }
 
 animate()
+
+
