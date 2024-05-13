@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GLTFLoader } from '../threejs/examples/GLTFLoader.js';
 import { OrbitControls } from '../threejs/examples/OrbitControls.js';
 
 const scene = new THREE.Scene();
@@ -95,6 +96,7 @@ class Box extends THREE.Mesh {
     }
 }
 
+
 function boxCollision({ obj1, obj2 }) {
     const xCollision = obj1.right >= obj2.left && obj1.left <= obj2.right;
     const yCollision = obj1.bottom + obj1.velocity.y <= obj2.top && obj1.top >= obj2.bottom;
@@ -103,9 +105,10 @@ function boxCollision({ obj1, obj2 }) {
     return xCollision && yCollision && zCollision;
 }
 
+
 // playe
 const cube = new Box({
-    width: 1,
+    width: 0.5,
     height: 1,
     depth: 1,
     color: '#FFFFFF',
@@ -116,12 +119,29 @@ const cube = new Box({
     },
     position: {
         x: 0,
-        y: 2,
+        y: -1.3,
         z: 3.2
     }
 });
-cube.castShadow = true;
+// Make cube transparent
+cube.material.transparent = true;
+cube.material.opacity = 0; // Adjust opacity as needed
+cube.castShadow = false;
 scene.add(cube);
+
+
+const loade = new GLTFLoader().setPath('assets/');
+loade.load('Pig.glb', (gltf) => {
+    const model = gltf.scene;
+    model.scale.set(0.01, 0.01, 0.01);
+    model.position.set(0, 0, 0);
+    model.rotateY(Math.PI);
+    scene.add(model);
+    cube.add(model);
+});
+
+
+
 
 // linha
 const ground = new Box({
