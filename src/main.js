@@ -9,9 +9,41 @@ const camera = new THREE.PerspectiveCamera(
     0.1,
     1000
 );
+const gltfLoader = new GLTFLoader().setPath('/assets/');
 
-const renderer = new THREE.WebGLRenderer();
+// Load mountain model
+const mountainLoaded = new GLTFLoader().setPath('assets/');
+mountainLoaded.load('mountain.glb', (gltf) => {
+    const montanha = gltf.scene;
+    montanha.scale.set(0.1, 0.1, 0.1);
+    montanha.position.set(0, 60, 0);
+    scene.add(montanha);
+});
+
+
+
+// Load skydome model
+const domeLoaded = new GLTFLoader().setPath('assets/');
+domeLoaded.load('skydome.glb', (gltf) => {
+    const ceu = gltf.scene;
+    ceu.position.set(0, -40, 0);
+	ceu.scale.set(0.5, 0.5, 0.5)
+    scene.add(ceu);
+});
+
+
+let renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
+renderer.outputEncoding = THREE.sRGBEncoding;
+
+  const ambient = new THREE.HemisphereLight(0xffffbb, 0x080820);
+  scene.add(ambient);
+
+  const lightt = new THREE.DirectionalLight(0xFFFFFF, 1);
+  lightt.position.set( 1, 10, 6);
+  scene.add(lightt);
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -106,6 +138,7 @@ function boxCollision({ obj1, obj2 }) {
 }
 
 
+
 // playe
 const cube = new Box({
     width: 0.5,
@@ -147,7 +180,7 @@ loade.load('Pig.glb', (gltf) => {
 const ground = new Box({
     width: 5,
     height: 0.5,
-    depth: 10,
+    depth: 50,
     color: '#964B00',
     position: {
         x: 0,
@@ -266,6 +299,14 @@ window.addEventListener('keyup', (event) => {
     }
 });
 
+const getRandomXPosition = () => {
+    // Array of possible x-coordinates
+    const possibleXPositions = [1.6,0, -1.6];
+    // Randomly select an index from the possibleXPositions array
+    const randomIndex = Math.floor(Math.random() * possibleXPositions.length);
+    // Return the corresponding x-coordinate
+    return possibleXPositions[randomIndex];
+};
 
 const enemy = new Box({
     width: 1,
@@ -274,20 +315,31 @@ const enemy = new Box({
     position: {
       x: 1.6,
       y: 0,
-      z: -4
+      z: -10
     },
     velocity: {
         x: 0,
         y: 0,
         z: 0.015
     },
-    color: 'orange',
     //zAcceleration: true
   })
-  enemy.castShadow = true
+  enemy.castShadow = false
+  enemy.material.opacity = 0;
+  enemy.material.transparent = true;
+
+  const loader = new GLTFLoader().setPath('assets/');
+    loader.load('Tractor.glb', (gltf) => {
+        const tractorModel = gltf.scene;
+        tractorModel.scale.set(0.1, 0.1, 0.1);
+        tractorModel.position.set(0, -0.5, 0);
+        enemy.add(tractorModel); // Add tractor model as child of the enemy cube
+    });
+
   scene.add(enemy)
 
   const enemies = [enemy]
+
 
 let frames = 0
 function animate() {
@@ -311,29 +363,38 @@ function animate() {
         cancelAnimationFrame(animationId)
       }
     })
-    if (frames % 360 === 0){
+    if (frames % 300 === 0){
         const enemy = new Box({
             width: 1,
             height: 1,
             depth: 1,
             position: {
-              x: -1.6,
-              //x: 1.6,
+              x: getRandomXPosition(),
               y: 0,
-              z: -4
+              z: -20
             },
             velocity: {
                 x: 0,
                 y: 0,
                 z: 0.015
             },
-            color: 'red',
             //zAcceleration: true
           })
-          enemy.castShadow = true
-          scene.add(enemy)
+          enemy.castShadow = false
+          enemy.material.opacity = 0;
+          enemy.material.transparent = true;
+        
+          const loader = new GLTFLoader().setPath('assets/');
+            loader.load('Tractor.glb', (gltf) => {
+                const tractorModel = gltf.scene;
+                tractorModel.scale.set(0.1, 0.1, 0.1);
+                tractorModel.position.set(0, -0.5, 0);
+                enemy.add(tractorModel); // Add tractor model as child of the enemy cube
+            });
+            scene.add(enemy)
           enemies.push(enemy)
     }
+
     frames++
 }
 
