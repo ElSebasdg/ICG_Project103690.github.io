@@ -303,7 +303,7 @@ window.addEventListener('keyup', (event) => {
 
 const getRandomXPosition = () => {
     // Array of possible x-coordinates
-    const possibleXPositions = [1.6, -1.6];
+    const possibleXPositions = [1.6, 0, -1.6];
     // Randomly select an index from the possibleXPositions array
     const randomIndex = Math.floor(Math.random() * possibleXPositions.length);
     // Return the corresponding x-coordinate
@@ -365,37 +365,69 @@ function animate() {
         cancelAnimationFrame(animationId)
       }
     })
-    if (frames % 300 === 0){
-        const enemy = new Box({
-            width: 1,
-            height: 1,
-            depth: 1,
-            position: {
-              x: getRandomXPosition(),
-              y: 0,
-              z: -20
-            },
-            velocity: {
-                x: 0,
-                y: 0,
-                z: 0.015
-            },
-            //zAcceleration: true
-          })
-          enemy.castShadow = false
-          enemy.material.opacity = 0;
-          enemy.material.transparent = true;
-        
-          const loader = new GLTFLoader().setPath('assets/');
+    if (frames % 300 === 0) {
+        const randomEnemyType = Math.random(); // Generate a random number between 0 and 1
+    
+        let newEnemy;
+        if (randomEnemyType < 0.5) {
+            // Spawn enemy1 (Tractor)
+            newEnemy = new Box({
+                width: 1,
+                height: 1,
+                depth: 1,
+                position: {
+                    x: getRandomXPosition(),
+                    y: 0,
+                    z: -20
+                },
+                velocity: {
+                    x: 0,
+                    y: 0,
+                    z: 0.015
+                },
+            });
+            const loader = new GLTFLoader().setPath('assets/');
             loader.load('Tractor.glb', (gltf) => {
                 const tractorModel = gltf.scene;
                 tractorModel.scale.set(0.1, 0.1, 0.1);
                 tractorModel.position.set(0, -0.5, 0);
-                enemy.add(tractorModel); // Add tractor model as child of the enemy cube
+                newEnemy.add(tractorModel); // Add tractor model as child of the enemy cube
             });
-            scene.add(enemy)
-          enemies.push(enemy)
+        } else {
+            // Spawn enemy2 (Chicken)
+            newEnemy = new Box({
+                width: 1,
+                height: 1,
+                depth: 1,
+                position: {
+                    x: getRandomXPosition(),
+                    y: 0,
+                    z: -20
+                },
+                velocity: {
+                    x: 0,
+                    y: 0,
+                    z: 0.015
+                },
+            });
+            const loader = new GLTFLoader().setPath('assets/');
+            loader.load('Chicken.glb', (gltf) => {
+                const chickenModel = gltf.scene;
+                chickenModel.scale.set(0.007, 0.007, 0.007);
+                chickenModel.position.set(0, -0.5, 0);
+                chickenModel.rotateY(Math.PI/2)
+                newEnemy.add(chickenModel); // Add chicken model as child of the enemy cube
+            });
+        }
+    
+        newEnemy.castShadow = false;
+        newEnemy.material.opacity = 0;
+        newEnemy.material.transparent = true;
+    
+        scene.add(newEnemy);
+        enemies.push(newEnemy);
     }
+
 
     frames++
 }
