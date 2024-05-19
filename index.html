@@ -1,26 +1,59 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fuga Infinita</title>
+  <title>Fuga Infinita - Enhanced Menu</title>
   <style>
-    body { margin: 0; }
+    body { 
+      margin: 0; 
+      overflow: hidden; 
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      height: 100vh; 
+      color: white; 
+      font-family: Arial, sans-serif; 
+    }
+    #menu {
+      display: flex; 
+      flex-direction: column; 
+      align-items: center;
+      gap: 20px; /* Added spacing between elements */
+    }
+    #menu h1 {
+      font-size: 3em; 
+      margin-bottom: 40px; /* Increased space below the title for better visual hierarchy */
+    }
+    #menu button {
+      padding: 15px 30px; /* Slightly increased padding for a more comfortable press */
+      font-size: 1.75em; /* Slightly increased font size for readability */
+      border: none; 
+      cursor: pointer; 
+      background-color: #ff6600; 
+      color: white; 
+      border-radius: 12px; /* Slightly rounded corners for a softer look */
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Added shadow for depth */
+      transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effect */
+    }
+    #menu button:hover {
+      background-color: #ff4500;
+      transform: scale(1.05); /* Slight enlargement on hover for feedback */
+    }
   </style>
 </head>
 <body>
+  <div id="menu">
+    <h1>Fuga da Floribela</h1>
+    <button id="startButton">Start Game</button>
+  </div>
 
-  <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "./threejs/build/three.module.js"
-      }
-    }
+  <script>
+    document.getElementById('startButton').addEventListener('click', function() {
+      window.location.href = 'game.html';
+    });
   </script>
-
-  <div id="threejs"> </div>
-  <script src="./src/main.js" type="module"></script>
-
 </body>
 </html>

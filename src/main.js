@@ -228,7 +228,7 @@ function animate() {
 
         let newEnemy;
         if (randomEnemyType < 0.25) {
-            newEnemy = createEnemy('Tractor.glb', 0.1, 0.1, 0.1, Math.PI * 2, 1, 0.8, 1.1, position, false);
+            newEnemy = createEnemy('Tractor.glb', 0.1, 0.1, 0.1, Math.PI * 2, 1.2, 1.1, 1.1, position, false);
         } else if (randomEnemyType < 0.50) {
             newEnemy = createEnemy('Chicken.glb', 0.007, 0.007, 0.007, Math.PI / 2, 0.55, 1, 1, position, false);
         } else if (randomEnemyType < 0.75) {
@@ -256,11 +256,18 @@ function animate() {
             } else {
                 console.log('Game Over');
                 cancelAnimationFrame(animationId);
+                window.location.href = `youLost.html?coins=${coinCounter}`;
             }
         } else if (enemy.position.z >= 10) {
             // Remove enemies that go past a certain point
             scene.remove(enemy);
             enemies.splice(index, 1);
+        }
+        else if (cube.position.y < -15) {
+            // Remove enemies that go past a certain point
+            scene.remove(cube);
+            cancelAnimationFrame(animationId);
+            window.location.href = `youLost.html?coins=${coinCounter}`;
         }
     });
 
