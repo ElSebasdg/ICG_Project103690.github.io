@@ -1,8 +1,7 @@
 # ICG_Project103690.github.io
 
-# Fuga da Floribela
-
-Bem-vindo ao repositório do jogo "Fuga da Floribela"!
+# Fuga da Floribela 
+Repositório do jogo "Fuga da Floribela" para o projeto final da UC Introdução à Computação Gráfica.
 
 ## Descrição
 
@@ -21,10 +20,3 @@ Bem-vindo ao repositório do jogo "Fuga da Floribela"!
 - **Desviar de Obstáculos:** Evite obstáculos.
 - **Não Cair no Vazio:** Ter cuidado para não cair fora da pista, senão perderá.
 
-## Licença
-
-Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## Contato
-
-- Email: sebastian.duque@ua.pt
